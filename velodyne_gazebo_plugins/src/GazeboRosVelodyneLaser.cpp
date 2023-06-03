@@ -271,7 +271,7 @@ void GazeboRosVelodyneLaser::ConnectCbStatic()
 
 sensor_msgs::PointCloud2 GazeboRosVelodyneLaser::Getcloud(ConstLaserScanStampedPtr& _msg)
 {
-  #if GAZEBO_MAJOR_VERSION >= 7
+#if GAZEBO_MAJOR_VERSION >= 7
   const ignition::math::Angle maxAngle = parent_ray_sensor_->AngleMax();
   const ignition::math::Angle minAngle = parent_ray_sensor_->AngleMin();
 
@@ -314,7 +314,8 @@ sensor_msgs::PointCloud2 GazeboRosVelodyneLaser::Getcloud(ConstLaserScanStampedP
   const uint32_t POINT_STEP = 32;
   sensor_msgs::PointCloud2 msg;
   msg.header.frame_id = frame_name_;
-  msg.header.stamp = ros::Time::now(); // (_msg->time().sec(), _msg->time().nsec());
+  msg.header.stamp.sec = _msg->time().sec();
+  msg.header.stamp.nsec = _msg->time().nsec();
   msg.fields.resize(5);
   msg.fields[0].name = "x";
   msg.fields[0].offset = 0;
