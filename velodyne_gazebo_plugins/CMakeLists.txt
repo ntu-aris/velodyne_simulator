@@ -8,7 +8,12 @@ find_package(catkin REQUIRED COMPONENTS
   gazebo_ros
   pcl_ros
 )
-find_package(gazebo REQUIRED)
+if("$ENV{ROS_DISTRO}" STREQUAL "melodic")
+  find_package(gazebo QUIET PATHS /usr/include/gazebo-11)
+else()
+  find_package(gazebo REQUIRED)
+endif()
+
 
 catkin_package(
   INCLUDE_DIRS include ${GAZEBO_INCLUDE_DIRS}
